@@ -11,3 +11,17 @@ export const updateCurrencies = (value) => ({
   type: CURRENCIES,
   value,
 });
+
+export const EXPENSE = 'EXPENSE';
+
+export const expenseRecord = (value) => ({
+  type: EXPENSE,
+  value,
+});
+
+export const WALLET_TOTAL = 'WALLET_TOTAL';
+
+export const walletTotal = (value) => ({
+  type: WALLET_TOTAL,
+  value,
+});
