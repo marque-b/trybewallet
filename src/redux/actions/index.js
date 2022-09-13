@@ -19,13 +19,6 @@ export const expenseRecord = (value) => ({
   value,
 });
 
-export const WALLET_TOTAL = 'WALLET_TOTAL';
-
-export const walletTotal = (value) => ({
-  type: WALLET_TOTAL,
-  value,
-});
-
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const removeExpenseFromState = (value) => ({

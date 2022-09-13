@@ -4,7 +4,15 @@ import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
-    const { email, total } = this.props;
+    const { email, expenses } = this.props;
+
+    const walletTotal = expenses.reduce((total, current) => {
+      const currency = current.exchangeRates[current.currency];
+      const rate = currency.ask * current.value;
+      const toFixed = Number(rate.toFixed(2));
+
+      return total + toFixed;
+    }, 0.00);
 
     return (
       <header>
@@ -14,7 +22,7 @@ class Header extends Component {
         </div>
         <p>Total:</p>
         <p data-testid="total-field">
-          { total.toFixed(2) }
+          { walletTotal === 0 ? <p>0.00</p> : walletTotal }
         </p>
         <p data-testid="header-currency-field">
           BRL
@@ -31,7 +39,7 @@ const mapStateToProps = (state) => ({
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape(PropTypes.any)).isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import requestCurrencies from '../services/currenciesAPI';
-import { updateCurrencies, expenseRecord, walletTotal } from '../redux/actions/index';
+import { updateCurrencies, expenseRecord } from '../redux/actions/index';
 
 class WalletForm extends Component {
   state = {
@@ -26,15 +26,6 @@ class WalletForm extends Component {
     const selectCurrencies = allCurrencies.filter((curr) => curr !== 'USDT');
     const { dispatch } = this.props;
     dispatch(updateCurrencies(selectCurrencies));
-  };
-
-  updateWalletTotal = () => {
-    const { expenses, dispatch, total } = this.props;
-    expenses.map((exp) => {
-      const exchangeRate = exp.exchangeRates[exp.currency].ask;
-      const converted = exp.value * exchangeRate;
-      return dispatch(walletTotal(total + converted));
-    });
   };
 
   changeTransactionId = () => {
@@ -63,7 +54,6 @@ class WalletForm extends Component {
     }));
     this.changeTransactionId();
     this.clearInputs();
-    this.updateWalletTotal();
   };
 
   isAddBtnDisabled = () => {
@@ -174,9 +164,6 @@ const mapStateToProps = (state) => ({
 WalletForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.shape(PropTypes.any)).isRequired,
-  total: PropTypes.number.isRequired,
-
 };
 
 export default connect(mapStateToProps)(WalletForm);
