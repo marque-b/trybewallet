@@ -25,3 +25,10 @@ export const removeExpenseFromState = (value) => ({
   type: REMOVE_EXPENSE,
   value,
 });
+
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+
+export const editExpenseFromState = (value) => ({
+  type: EDIT_EXPENSE,
+  value,
+});

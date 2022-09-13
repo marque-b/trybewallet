@@ -73,7 +73,7 @@ class WalletForm extends Component {
   render() {
     const { btnDisabler, currency,
       description, method, tag, value } = this.state;
-    const { currencies } = this.props;
+    const { currencies, editMode } = this.props;
 
     return (
       <section>
@@ -149,7 +149,7 @@ class WalletForm extends Component {
             onClick={ this.saveExpense }
             disabled={ btnDisabler }
           >
-            Adicionar despesa
+            { editMode ? 'Editar despesa' : 'Adicionar despesa'}
           </button>
         </form>
       </section>
