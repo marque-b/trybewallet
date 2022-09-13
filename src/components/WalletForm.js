@@ -141,7 +141,7 @@ class WalletForm extends Component {
           <label htmlFor="tag-input">
             Category:
             <select
-              name="category"
+              name="tag"
               id="tag-input"
               data-testid="tag-input"
               onChange={ this.handleChange }
