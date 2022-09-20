@@ -32,3 +32,10 @@ export const editExpenseFromState = (value) => ({
   type: EDIT_EXPENSE,
   value,
 });
+
+export const OVERRIDE_EXPENSE = 'OVERRIDE_EXPENSE';
+
+export const overrideExpense = (value) => ({
+  type: OVERRIDE_EXPENSE,
+  value,
+});

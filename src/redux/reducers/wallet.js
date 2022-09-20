@@ -1,4 +1,9 @@
-import { CURRENCIES, EXPENSE, REMOVE_EXPENSE, EDIT_EXPENSE } from '../actions';
+import {
+  CURRENCIES,
+  EXPENSE, REMOVE_EXPENSE,
+  EDIT_EXPENSE,
+  OVERRIDE_EXPENSE,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -7,30 +12,39 @@ const INITIAL_STATE = {
   editMode: false,
 };
 
-const walletReducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
+const walletReducer = (state = INITIAL_STATE, { value, type }) => {
+  // const { expenses } = state;
+
+  switch (type) {
   case CURRENCIES:
     return {
       ...state,
-      currencies: action.value,
+      currencies: value,
     };
   case EXPENSE:
     return {
       ...state,
-      expenses: [...state.expenses, action.value],
+      expenses: [...state.expenses, value],
       editMode: false,
     };
   case REMOVE_EXPENSE:
     return {
       ...state,
-      expenses: action.value,
+      expenses: value,
       editMode: false,
     };
   case EDIT_EXPENSE:
     return {
       ...state,
-      idToEdit: action.value,
+      idToEdit: value,
       editMode: true,
+    };
+  case OVERRIDE_EXPENSE:
+    return {
+      ...state,
+      expenses: value,
+      editMode: false,
+      idToEdit: '',
     };
   default:
     return state;
