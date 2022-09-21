@@ -13,8 +13,6 @@ const INITIAL_STATE = {
 };
 
 const walletReducer = (state = INITIAL_STATE, { value, type }) => {
-  // const { expenses } = state;
-
   switch (type) {
   case CURRENCIES:
     return {

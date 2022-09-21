@@ -6,7 +6,7 @@ import mockData from './helpers/mockData';
 import App from '../App';
 
 const VALID_EMAIL = 'email@trybe.com';
-const MOCK_TOTAL = 1519.49;
+const MOCK_TOTAL = 1520.013;
 
 const mockState = {
   user: {
@@ -64,23 +64,29 @@ const mockState = {
 };
 
 describe('Testes da página de carteira', () => {
-  it('Utiliza a rota correta', () => {
-    const { history:
-      { location: { pathname } },
-    } = renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'] });
+  it('O email de login é renderizado', () => {
+    renderWithRouterAndRedux(<App />);
+    const emailInput = screen.getByTestId('email-input');
+    const passwordInput = screen.getByTestId('password-input');
+    const loginBtn = screen.getByRole('button', { name: /Entrar/i });
 
-    expect(pathname).toEqual('/carteira');
+    userEvent.type(emailInput, VALID_EMAIL);
+    userEvent.type(passwordInput, '123456');
+    userEvent.click(loginBtn);
+
+    const loggedEmail = screen.getByTestId('email-field');
+    expect(loggedEmail).toBe(VALID_EMAIL);
   });
 
   it('Os inputs são renderizados', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/carteira');
 
-    const valueInput = screen.getByTestId('value-input');
-    const descriptionInput = screen.getByTestId('description-input');
-    const currencyInput = screen.getByTestId('currency-input');
-    const methodInput = screen.getByTestId('method-input');
-    const tagInput = screen.getByTestId('tag-input');
+    const valueInput = screen.getByRole('input', { name: 'value' });
+    const descriptionInput = screen.getByRole('input', { name: 'description' });
+    const currencyInput = screen.getByRole('select', { name: 'currency' });
+    const methodInput = screen.getByRole('select', { name: 'method' });
+    const tagInput = screen.getByRole('select', { name: 'tag' });
 
     expect(valueInput).toBeInTheDocument();
     expect(descriptionInput).toBeInTheDocument();
@@ -90,31 +96,18 @@ describe('Testes da página de carteira', () => {
   });
 
   it('O total da carteira é exibido corretamente', () => {
-    renderWithRouterAndRedux(<App />, { initialState: mockState, initialEntries: ['/carteira'] });
-    const totalSum = screen.getByTestId('total-field');
-    expect(Number(totalSum.innerHTML)).toBe(MOCK_TOTAL);
-  });
-
-  it('Uma despesa pode ser deletada corretamente', () => {
-    renderWithRouterAndRedux(<App />, { initialState: mockState, initialEntries: ['/carteira'] });
-
-    const deleteBtn = screen.getAllByTestId('delete-btn');
-    expect(deleteBtn).toHaveLength(3);
-  });
-
-  it('As despesas podem ser adicionadas', () => {
-    const { history } = renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<App />, { initialState: mockState });
     history.push('/carteira');
 
-    const valueInput = screen.getByTestId('value-input');
-    const descriptionInput = screen.getByTestId('description-input');
-    const addExpenseBtn = screen.getByRole('button', { name: /adicionar despesa/i });
+    const totalSum = screen.getByTestId('total-field');
+    expect(totalSum).toBe(MOCK_TOTAL);
+  });
 
-    userEvent.type(valueInput, '10');
-    userEvent.type(descriptionInput, 'McDonalds');
-    userEvent.click(addExpenseBtn);
+  it('A despesa é apagada corretamente ao clicar no botão', () => {
+    const { history } = renderWithRouterAndRedux(<App />, { initialState: mockState });
+    history.push('/carteira');
 
-    const deleteBtn = screen.getAllByTestId('delete-btn');
-    expect(deleteBtn).toBeInTheDocument();
+    const deleteBtn = screen.getByTestId('edit-btn');
+    console.log(deleteBtn);
   });
 });

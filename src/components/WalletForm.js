@@ -74,8 +74,7 @@ class WalletForm extends Component {
   render() {
     const { btnDisabler, currency,
       description, method, tag, value } = this.state;
-    const { currencies, editMode, idToEdit } = this.props;
-    console.log(idToEdit, editMode);
+    const { currencies, editMode } = this.props;
 
     return (
       <section>
@@ -171,7 +170,6 @@ WalletForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   editMode: PropTypes.bool.isRequired,
-  idToEdit: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(WalletForm);
